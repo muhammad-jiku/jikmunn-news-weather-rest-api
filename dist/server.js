@@ -11,15 +11,19 @@ const init = () => {
     let routes = [
         {
             http: "get",
+            path: "/",
+            handler: (req, res) => {
+                res.send({ message: "Daily routine is genuinely great!" });
+            },
+        },
+        {
+            http: "get",
             path: "/welcome",
             handler: (req, res) => {
                 res.send({ message: "This is welcome message for all of you!" });
             },
         },
     ];
-    app.get("/", (req, res) => {
-        res.send({ message: "Daily routine is genuinely great!" });
-    });
     routes.forEach((route) => {
         app[route.http](route.path, route.handler);
     });
