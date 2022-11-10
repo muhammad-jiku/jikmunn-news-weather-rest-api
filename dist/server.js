@@ -8,6 +8,21 @@ const express_1 = __importDefault(require("express"));
 // initializing app config
 const init = () => {
     let app = (0, express_1.default)();
+    let routes = [
+        {
+            http: "get",
+            path: "/welcome",
+            handler: (req, res) => {
+                res.send({ message: "This is welcome message for all of you!" });
+            },
+        },
+    ];
+    app.get("/", (req, res) => {
+        res.send({ message: "Daily routine is genuinely great!" });
+    });
+    routes.forEach((route) => {
+        app[route.http](route.path, route.handler);
+    });
     app.use("/", (req, res) => {
         res.send({ message: "Welcome here!" });
     });
