@@ -1,0 +1,16 @@
+yarn add -D typescript ts-node nodemon cross-env
+yarn add @types/node
+package.json => yarn init / npm init --y
+tsconfig.json => tsc --init
+insomnia download// optional
+
+set value
+---------
+tsconfig.json => target:"es2022"
+
+how to run a ts prog
+--------------------
+1. tsc index.ts node index.js
+2. ts-node index.ts
+3. nodemon index.ts (Server)
+4. yarn start

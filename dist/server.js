@@ -5,26 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 // external imports
 const express_1 = __importDefault(require("express"));
+// internal imports
+const routes_1 = require("./routes/routes");
 // initializing app config
 const init = () => {
     let app = (0, express_1.default)();
-    let routes = [
-        {
-            http: "get",
-            path: "/",
-            handler: (req, res) => {
-                res.send({ message: "Daily routine is genuinely great!" });
-            },
-        },
-        {
-            http: "get",
-            path: "/welcome",
-            handler: (req, res) => {
-                res.send({ message: "This is welcome message for all of you!" });
-            },
-        },
-    ];
-    routes.forEach((route) => {
+    routes_1.routes.forEach((route) => {
         app[route.http](route.path, route.handler);
     });
     app.use("/", (req, res) => {

@@ -1,36 +1,12 @@
 // external imports
-import express, { Application, Request, Response } from "express";
+import express, { Application } from "express";
 
-// declaring handler funtion
-export type Handler = (req: Request, res: Response) => void;
-
-// declaring interface type
-interface IRoute {
-  http: string;
-  path: string;
-  handler: Handler;
-}
+// internal imports
+import { routes } from "./routes/routes";
 
 // initializing app config
 const init = (): Application => {
   let app = express();
-
-  let routes: IRoute[] = [
-    {
-      http: "get",
-      path: "/",
-      handler: (req: Request, res: Response) => {
-        res.send({ message: "Daily routine is genuinely great!" });
-      },
-    },
-    {
-      http: "get",
-      path: "/welcome",
-      handler: (req: Request, res: Response) => {
-        res.send({ message: "This is welcome message for all of you!" });
-      },
-    },
-  ];
 
   routes.forEach((route) => {
     (app as any)[route.http](route.path, route.handler);
