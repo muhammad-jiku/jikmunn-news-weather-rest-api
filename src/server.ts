@@ -2,15 +2,13 @@
 import express, { Application } from "express";
 
 // internal imports
-import { routes } from "./routes/routes";
+import router from "./routes/routes";
 
 // initializing app config
 const init = (): Application => {
   let app = express();
 
-  routes.forEach((route) => {
-    (app as any)[route.http](route.path, route.handler);
-  });
+  app.use("/api/v1", router);
 
   app.use("/", (req, res) => {
     res.send({ message: "Welcome here!" });

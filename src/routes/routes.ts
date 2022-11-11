@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import express, { Request, Response, Router } from "express";
 
 // declaring handler funtion
 export type Handler = (req: Request, res: Response) => void;
@@ -10,7 +10,7 @@ export interface IRoute {
   handler: Handler;
 }
 
-export const routes: IRoute[] = [
+const routes: IRoute[] = [
   {
     http: "get",
     path: "/",
@@ -26,3 +26,12 @@ export const routes: IRoute[] = [
     },
   },
 ];
+
+// defining router
+const router: Router = express.Router();
+
+routes.forEach((route) => {
+  (router as any)[route.http](route.path, route.handler);
+});
+
+export default router;

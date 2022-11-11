@@ -6,13 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // external imports
 const express_1 = __importDefault(require("express"));
 // internal imports
-const routes_1 = require("./routes/routes");
+const routes_1 = __importDefault(require("./routes/routes"));
 // initializing app config
 const init = () => {
     let app = (0, express_1.default)();
-    routes_1.routes.forEach((route) => {
-        app[route.http](route.path, route.handler);
-    });
+    app.use("/api/v1", routes_1.default);
     app.use("/", (req, res) => {
         res.send({ message: "Welcome here!" });
     });
