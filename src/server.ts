@@ -5,8 +5,8 @@ dotenv.config();
 import config from "config";
 
 // internal imports
-import log from "./utilities/logger";
 import routes from "./routes/routes";
+import dataabaseConnect from "./utilities/databaseConnect";
 
 // declaring port and host
 const port = config.get("port") as number;
@@ -19,8 +19,12 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.listen(port, host, () => {
-  log.info(`Server is running at http://${host}:${port}`);
+app.listen(port, host, async () => {
+  console.log(`Server is running at http://${host}:${port}`);
 
+  // database connection
+  await dataabaseConnect();
+
+  // routes setup
   routes(app);
 });

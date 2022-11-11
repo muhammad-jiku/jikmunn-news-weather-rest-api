@@ -3,7 +3,7 @@ import { Express, Request, Response } from "express";
 
 // defining routes
 const routes = (app: Express) => {
-  app.get("/healthcheck", (req: Request, res: Response) =>
+  app.get("/", (req: Request, res: Response) =>
     res.status(200).send({
       message: "Hello there! Welcome to check health section!!",
     })
