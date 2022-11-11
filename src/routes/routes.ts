@@ -1,10 +1,11 @@
 // external imports
-import express, { Application, Request, Response } from "express";
+import { Express, Request, Response } from "express";
 
-const routes = (app: Application) => {
+// defining routes
+const routes = (app: Express) => {
   app.get("/healthcheck", (req: Request, res: Response) =>
     res.status(200).send({
-      message: "Hello there! Welcome here!!",
+      message: "Hello there! Welcome to check health section!!",
     })
   );
 };
