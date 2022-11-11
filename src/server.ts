@@ -1,29 +1,26 @@
 // external imports
-import express, { Application } from "express";
+import express from "express";
+import dotenv from "dotenv";
+dotenv.config();
+import config from "config";
 
 // internal imports
-import router from "./routes/routes";
+import log from "./utilities/logger";
+import routes from "./routes/routes";
 
-// initializing app config
-const init = (): Application => {
-  let app = express();
+// declaring port and host
+const port = config.get("port") as number;
+const host = config.get("host") as string;
 
-  app.use("/api/v1", router);
+// initializing app
+const app = express();
 
-  app.use("/", (req, res) => {
-    res.send({ message: "Welcome here!" });
-  });
+// middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-  return app;
-};
+app.listen(port, host, () => {
+  log.info(`Server is running at http://${host}:${port}`);
 
-// declaring port
-const port = (process.env.PORT || 4000) as Number;
-
-// calling init function
-const app = init();
-
-// listening to the port
-app.listen(port, () => {
-  console.log(`server running at http://localhost:${port}`);
+  routes(app);
 });
