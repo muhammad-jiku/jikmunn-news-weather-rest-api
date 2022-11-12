@@ -7,8 +7,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "start": "cross-env NODE_ENV=development nodemon ./dist/server.js",
-    "serve": "cross-env NODE_ENV=production nodemon ./dist/server.js",
+    "start": "cross-env NODE_ENV=development nodemon ./build/server.js",
+    "serve": "cross-env NODE_ENV=production nodemon ./build/server.js",
     "build": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
