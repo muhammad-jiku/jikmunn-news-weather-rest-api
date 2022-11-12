@@ -1,63 +1,24 @@
 // external imports
-import mongoose from "mongoose";
-import bcrypt from "bcrypt";
-import config from "config";
+import { object, string, TypeOf } from "zod";
 
-// user document interface
-export interface UserDocument extends mongoose.Document {
-  email: string;
-  name: string;
-  password: string;
-  createdAt: Date;
-  updatedAt: Date;
-  comparePassword(candidatePassword: string): Promise<Boolean>;
-}
-
-// defining user schema
-const userSchema = new mongoose.Schema(
-  {
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    name: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
-
-// declaring middleware before save
-userSchema.pre("save", async function (next) {
-  let user = this as UserDocument;
-
-  if (!user.isModified("password")) {
-    return next();
-  }
-  const salt = await bcrypt.genSalt(config.get<number>("saltWorkFactor"));
-  const hash = await bcrypt.hashSync(user?.password, salt);
-
-  user.password = hash;
-  return next();
+export const createUserSchema = object({
+  body: object({
+    name: string({
+      required_error: "Name is required",
+    }),
+    password: string({
+      required_error: "Name is required",
+    }).min(6, "Password too short - should be 6 chars minimum"),
+    passwordConfirmation: string({
+      required_error: "passwordConfirmation is required",
+    }),
+    email: string({
+      required_error: "Email is required",
+    }).email("Not a valid email"),
+  }).refine((data) => data.password === data.passwordConfirmation, {
+    message: "Passwords do not match",
+    path: ["passwordConfirmation"],
+  }),
 });
 
-// instance methods
-userSchema.methods.comparePassword = async function (
-  candidatePassword: string
-): Promise<boolean> {
-  const user = this as UserDocument;
-
-  return bcrypt.compare(candidatePassword, user?.password).catch((e) => false);
-};
-
-// exporting user schema
-export default userSchema;
+export type CreateUserInput = TypeOf<typeof createUserSchema>;

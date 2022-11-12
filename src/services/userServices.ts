@@ -2,8 +2,7 @@
 import { DocumentDefinition } from "mongoose";
 
 // internal imports
-import { UserDocument } from "../schemas/userSchema";
-import UserModel from "../models/UserModel";
+import UserModel, { UserDocument } from "../models/UserModel";
 
 // defining create user
 export async function createUser(input: DocumentDefinition<UserDocument>) {
