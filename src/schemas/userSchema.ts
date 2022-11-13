@@ -1,4 +1,5 @@
 // external imports
+import { Omit } from "lodash";
 import { object, string, TypeOf } from "zod";
 
 export const createUserSchema = object({
@@ -21,4 +22,7 @@ export const createUserSchema = object({
   }),
 });
 
-export type CreateUserInput = TypeOf<typeof createUserSchema>;
+export type CreateUserInput = Omit<
+  TypeOf<typeof createUserSchema>,
+  "body.passwordConfirmation"
+>;
