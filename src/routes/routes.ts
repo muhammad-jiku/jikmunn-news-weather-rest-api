@@ -15,7 +15,7 @@ const routes = (app: Express) => {
   );
 
   // registering user
-  app.post(" /signup", validate(createUserSchema), createUserHandler);
+  app.post("/signup", validate(createUserSchema), createUserHandler);
 };
 
 export default routes;

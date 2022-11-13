@@ -13,7 +13,7 @@ export async function createUserHandler(
   try {
     const user = await createUser(req.body);
     log.info(user);
-    return user;
+    return res.status(200).json({ data: user });
   } catch (err: any) {
     log.error(err);
     return res.status(500).send(err.message);
